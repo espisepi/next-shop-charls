@@ -9,7 +9,7 @@ const Scene = dynamic(() => import('@/scenes/Scene'), {
   ssr: false,
 })
 
-const Page = ({ title }) => {
+export default function Page({ title }) {
   useStore.setState({ title })
   return (
     <>
@@ -17,8 +17,6 @@ const Page = ({ title }) => {
     </>
   )
 }
-
-export default Page
 
 export async function getServerSideProps() {
 
