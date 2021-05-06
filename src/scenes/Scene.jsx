@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect, useMemo } from 'react';
 import * as THREE from 'three';
 import { useGLTF, OrbitControls } from '@react-three/drei';
 
@@ -17,6 +17,18 @@ export default function Scene() {
             <ModelScene />
         </Suspense>
         <OrbitControls />
+        <BackgroundPrincipalDiv />
         </>
     );
+}
+
+function BackgroundPrincipalDiv() {
+    const el = useMemo( () => document.getElementById('principalDiv') ) ;
+    useEffect(()=>{
+      el.style.zIndex = 0;
+      return () => {
+        el.style.zIndex = 10;
+      }
+    },[el]);
+    return null;
 }
