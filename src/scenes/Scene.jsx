@@ -10,9 +10,7 @@ function ModelScene() {
     const gltf = useGLTF('obj/scene.glb');
     // console.log(gltf);
     const [texture,texture_disp,texture_norm] = useLoader(THREE.TextureLoader, ['img/1.png','img/1_disp.png','img/1_norm.png']);
-    const [text_env] = useLoader(THREE.TextureLoader, ['img/2.png']);
-    text_env.mapping = THREE.EquirectangularReflectionMapping;
-    text_env.mapping = THREE.CubeReflectionMapping;
+    const [text_env] = useLoader(THREE.TextureLoader, ['img/2_new.png']);
     gltf.scene.traverse((o)=>{
         if(o.name === 'Sphere'){
 
@@ -36,9 +34,11 @@ function ModelScene() {
         }
     });
 
-    const { scene } = useThree();
+    const { scene, gl } = useThree();
     useEffect(()=>{
         scene.background = text_env;
+
+        gl.toneMapping = THREE.LinearToneMapping;
     })
 
     return <primitive object={gltf.scene} />;
@@ -67,6 +67,7 @@ export default function Scene({purchase}) {
         <>
         <ambientLight intensity={0.15} />
         <directionalLight intensity={0.5} position={[0,100,100]} />
+        <directionalLight intensity={0.5} position={[0,100,-100]} />
         <Suspense fallback={<Loading />}>
             <ModelScene />
             {/* <PlanePurchase r3f purchase={purchase} /> */}
