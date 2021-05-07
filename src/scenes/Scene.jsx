@@ -4,6 +4,7 @@ import { useThree, useLoader } from '@react-three/fiber';
 import { useGLTF, OrbitControls } from '@react-three/drei';
 
 import Loading from '@/components/canvas/Loading';
+import Stars from '@/components/canvas/Stars';
 import Box from '@/components/canvas/Box';
 
 function ModelScene() {
@@ -68,6 +69,7 @@ export default function Scene({purchase}) {
         <ambientLight intensity={0.15} />
         <directionalLight intensity={0.5} position={[0,100,100]} />
         <directionalLight intensity={0.5} position={[0,100,-100]} />
+        <Stars />
         <Suspense fallback={<Loading />}>
             <ModelScene />
             {/* <PlanePurchase r3f purchase={purchase} /> */}
