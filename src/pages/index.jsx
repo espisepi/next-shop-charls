@@ -3,17 +3,28 @@ import dynamic from 'next/dynamic'
 
 import { loadStripe } from "@stripe/stripe-js";
 import Stripe from "stripe";
+import { useCallback } from 'react';
 // import { createCheckoutSession } from "next-stripe/client";
+import usePurchase from '@/hooks/usePurchase';
 
 const Scene = dynamic(() => import('@/scenes/Scene'), {
   ssr: false,
 })
 
+// const usePurchase = dynamic(() => import('@/hooks/usePurchase'), {
+//   ssr: false,
+// });
+
 export default function Page({ title }) {
+
   useStore.setState({ title })
+
+  const { purchase } = usePurchase();
+
   return (
     <>
-      <Scene r3f/>
+      {/* <h1>HOla mundo</h1> */}
+      <Scene r3f purchase={purchase} />
     </>
   )
 }

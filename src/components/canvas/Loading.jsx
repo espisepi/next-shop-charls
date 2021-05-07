@@ -7,7 +7,7 @@ export default function Loading() {
     const mesh = useRef(null);
 
     useFrame(() => {
-        if( mesh ) {
+        if( mesh.current ) {
             mesh.current.rotation.y += 0.05;
         }
     })
