@@ -29,18 +29,17 @@ function ModelScene() {
                 // displacementMap: texture_disp,
                 side:THREE.DoubleSide
             });
-
-            
-
         }
     });
 
-    const { scene, gl } = useThree();
+    const { scene, gl, camera } = useThree();
     useEffect(()=>{
         scene.background = text_env;
 
         gl.toneMapping = THREE.LinearToneMapping;
-    })
+
+        camera.position.z = 1;
+    },[])
 
     return <primitive object={gltf.scene} />;
 }
@@ -74,7 +73,7 @@ export default function Scene({purchase}) {
             <ModelScene />
             {/* <PlanePurchase r3f purchase={purchase} /> */}
         </Suspense>
-        <OrbitControls />
+        <OrbitControls enablePan={false} />
         <BackgroundPrincipalDiv />
         </>
     );
