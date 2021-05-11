@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useMemo } from 'react';
 import * as THREE from 'three';
-import { useThree, useLoader } from '@react-three/fiber';
+import { useThree, useLoader, useFrame } from '@react-three/fiber';
 import { useGLTF, OrbitControls } from '@react-three/drei';
 
 import Loading from '@/components/canvas/Loading';
@@ -31,6 +31,14 @@ function ModelScene() {
             });
         }
     });
+
+    const sphere = useMemo(()=>{
+        return gltf.nodes.Sphere;
+    },[]);
+
+    useFrame((state,dt)=>{
+        sphere.rotation.y -= dt * 0.05;
+    })
 
     const { scene, gl, camera } = useThree();
     useEffect(()=>{
