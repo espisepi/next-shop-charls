@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { createCheckoutSession } from "next-stripe/client";
+import { loadStripe } from "@stripe/stripe-js";
 
 export default function usePurchase(){
 
@@ -7,7 +8,6 @@ export default function usePurchase(){
     // const { items } = useCart();
   
     const purchase = useCallback( async ()=>{
-        console.log('holi')
         const cartFiltered = [{ price: 'price_1HHAiHDacTuHZSBKCkWa5Bui', quantity: 1}];
 
         const session = await createCheckoutSession({

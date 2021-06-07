@@ -7,6 +7,9 @@ import Loading from '@/components/canvas/Loading';
 import Stars from '@/components/canvas/Stars';
 import Box from '@/components/canvas/Box';
 
+import { A11y } from '@react-three/a11y'
+import useStore from '@/helpers/store'
+
 function ModelScene() {
     const gltf = useGLTF('obj/scene.glb');
     // console.log(gltf);
@@ -15,7 +18,6 @@ function ModelScene() {
     gltf.scene.traverse((o)=>{
         if(o.name === 'Sphere'){
 
-            console.log(o)
 
             o.material = new THREE.MeshPhysicalMaterial({
                 clearcoat: 1.0,
@@ -53,12 +55,22 @@ function ModelScene() {
 }
 
 function PlanePurchase({ purchase }) {
-    const hola = () => console.log('hola')
+    const router = useStore((s) => s.router)
     return(
-        <mesh position={[0,0,0,]} scale={[1,1,1]} onHover={()=>console.log('hover')} onClick={(e)=>hola()}>
-            <planeBufferGeometry args={[1,1]} />
-            <meshBasicMaterial color='red' side={THREE.DoubleSide} />
-        </mesh>
+    <A11y
+      role='button'
+      actionCall={() => {
+        purchase()
+      }}
+    >
+      <mesh position={[0,0,-5]}
+      >
+        <boxGeometry args={[1, 1, 1]} />
+        <meshBasicMaterial
+          color='red'
+        />
+      </mesh>
+    </A11y>
     );
 }
 
@@ -79,7 +91,7 @@ export default function Scene({purchase}) {
         <Stars />
         <Suspense fallback={<Loading />}>
             <ModelScene />
-            {/* <PlanePurchase r3f purchase={purchase} /> */}
+            <PlanePurchase r3f purchase={purchase} />
         </Suspense>
         <OrbitControls enablePan={false} />
         <BackgroundPrincipalDiv />
